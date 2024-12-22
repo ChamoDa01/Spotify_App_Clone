@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1039925115925",
+    "project_id": "cd-spotify-clone-18dfb",
+    "storage_bucket": "cd-spotify-clone-18dfb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039925115925:android:997e3052297aa8258aa21c",
+        "android_client_info": {
+          "package_name": "com.chamoda.spotifyapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIl7P_otSRMmT4fQ9XZyUsP21bZQmRPKU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
