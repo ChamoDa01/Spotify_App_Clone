@@ -13,16 +13,10 @@ class AuthFirebaseServiceImpl implements AuthFirebaseService {
   @override
   Future<Either> signIn(SigninUserReq signinUserReq) async {
     try {
-      var data = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: signinUserReq.email,
         password: signinUserReq.password,
       );
-
-      FirebaseFirestore.instance.collection('Users').add({
-        'name': data.user?.displayName,
-        'email': data.user?.email,
-      });
-
       return const Right('Sign in successful');
     } on FirebaseAuthException catch (e) {
       String message = '';
@@ -38,10 +32,16 @@ class AuthFirebaseServiceImpl implements AuthFirebaseService {
   @override
   Future<Either> signUp(CreateUserReq createUserReq) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      var data = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: createUserReq.email,
         password: createUserReq.password,
       );
+
+      FirebaseFirestore.instance.collection('Users').add({
+        'name': createUserReq.fullName,
+        'email': data.user?.email,
+      });
+
       return Right('Sign up successful');
     } on FirebaseAuthException catch (e) {
       String message = '';
