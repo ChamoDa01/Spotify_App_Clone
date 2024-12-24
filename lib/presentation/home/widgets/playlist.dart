@@ -5,6 +5,7 @@ import 'package:spotify_app/core/configs/theme/app_colors.dart';
 import 'package:spotify_app/domain/entities/song/song.dart';
 import 'package:spotify_app/presentation/home/bloc/playlist_cubit.dart';
 import 'package:spotify_app/presentation/home/bloc/playlist_state.dart';
+import 'package:spotify_app/presentation/song_player/pages/song_player.dart';
 
 class Playlist extends StatelessWidget {
   const Playlist({super.key});
@@ -72,60 +73,71 @@ class Playlist extends StatelessWidget {
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         final song = songs[index];
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                Container(
-                  height: 45,
-                  width: 45,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: context.isDarkMode
-                        ? AppColors.darkGrey
-                        : const Color.fromARGB(255, 221, 221, 221),
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    SongPlayerPage(song: songs[index]),
+              ),
+            );
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    height: 45,
+                    width: 45,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: context.isDarkMode
+                          ? AppColors.darkGrey
+                          : const Color.fromARGB(255, 221, 221, 221),
+                    ),
+                    child: Icon(
+                      Icons.play_arrow_rounded,
+                      color: context.isDarkMode
+                          ? const Color.fromARGB(255, 221, 221, 221)
+                          : AppColors.darkGrey,
+                    ),
                   ),
-                  child: Icon(
-                    Icons.play_arrow_rounded,
-                    color: context.isDarkMode
-                        ? const Color.fromARGB(255, 221, 221, 221)
-                        : AppColors.darkGrey,
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        song.title,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: context.isDarkMode
-                              ? Colors.white
-                              : AppColors.darkGrey,
+                  const SizedBox(width: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          song.title,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: context.isDarkMode
+                                ? Colors.white
+                                : AppColors.darkGrey,
+                          ),
                         ),
-                      ),
-                      Text(
-                        song.artist,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
+                        Text(
+                          song.artist,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.more_vert),
-            ),
-          ],
+                ],
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.more_vert),
+              ),
+            ],
+          ),
         );
       },
       separatorBuilder: (context, index) => const SizedBox(height: 15),

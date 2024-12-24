@@ -43,6 +43,7 @@ dependencies:
   get_it:
   dartz:
   cloud_firestore:
+  just_audio: ^0.9.36
 
 dev_dependencies:
   flutter_test:

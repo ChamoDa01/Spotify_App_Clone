@@ -5,6 +5,7 @@ import 'package:spotify_app/core/configs/theme/app_colors.dart';
 import 'package:spotify_app/domain/entities/song/song.dart';
 import 'package:spotify_app/presentation/home/bloc/news_songs_cubit.dart';
 import 'package:spotify_app/presentation/home/bloc/news_songs_state.dart';
+import 'package:spotify_app/presentation/song_player/pages/song_player.dart';
 
 class NewsSongs extends StatelessWidget {
   const NewsSongs({super.key});
@@ -38,69 +39,80 @@ class NewsSongs extends StatelessWidget {
     return ListView.separated(
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
-        return SizedBox(
-          width: 120,
-          child: Column(
-            children: [
-              Container(
-                width: 120,
-                height: 160,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  image: DecorationImage(
-                    image: NetworkImage(songs[index].image),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: Container(
-                    height: 40,
-                    width: 40,
-                    transform: Matrix4.translationValues(10, 10, 0),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: context.isDarkMode
-                          ? AppColors.darkGrey
-                          : const Color.fromARGB(255, 221, 221, 221),
-                    ),
-                    child: Icon(
-                      Icons.play_arrow_rounded,
-                      color: context.isDarkMode
-                          ? const Color.fromARGB(255, 221, 221, 221)
-                          : AppColors.darkGrey,
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    SongPlayerPage(song: songs[index]),
+              ),
+            );
+          },
+          child: SizedBox(
+            width: 120,
+            child: Column(
+              children: [
+                Container(
+                  width: 120,
+                  height: 160,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                      image: NetworkImage(songs[index].image),
+                      fit: BoxFit.cover,
                     ),
                   ),
-                ),
-              ),
-              const SizedBox(height: 8),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  songs[index].title,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      transform: Matrix4.translationValues(10, 10, 0),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: context.isDarkMode
+                            ? AppColors.darkGrey
+                            : const Color.fromARGB(255, 221, 221, 221),
+                      ),
+                      child: Icon(
+                        Icons.play_arrow_rounded,
+                        color: context.isDarkMode
+                            ? const Color.fromARGB(255, 221, 221, 221)
+                            : AppColors.darkGrey,
+                      ),
+                    ),
                   ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
                 ),
-              ),
-              const SizedBox(height: 4),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  songs[index].artist,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
+                const SizedBox(height: 8),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    songs[index].title,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                   ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
                 ),
-              ),
-            ],
+                const SizedBox(height: 4),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    songs[index].artist,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
